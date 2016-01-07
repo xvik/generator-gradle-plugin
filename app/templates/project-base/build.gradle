@@ -1,0 +1,119 @@
+plugins {
+    id 'groovy'
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.9.2'
+    id 'net.researchgate.release' version '2.3.4'
+    id 'ru.vyarus.quality' version '1.2.0'<% if (mirrorToJcenter) { %>
+    id 'com.jfrog.bintray' version '1.5'
+    id 'ru.vyarus.java-lib' version '1.0.1'<% } %>
+    id 'ru.vyarus.github-info' version '1.0.0'
+    id "com.github.ben-manes.versions" version "0.11.3"
+}
+
+sourceCompatibility = <%= targetJava %>
+
+wrapper {
+    gradleVersion = 2.9
+}
+
+task createClasspathManifest {
+    def outputDir = file("$buildDir/$name")
+
+    inputs.files sourceSets.main.runtimeClasspath
+    outputs.dir outputDir
+
+    doLast {
+        outputDir.mkdirs()
+        file("$outputDir/plugin-classpath.txt").text = sourceSets.test.runtimeClasspath.join("\n")
+    }
+}
+
+repositories { jcenter() }
+dependencies {
+    testCompile gradleTestKit()
+    testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
+        exclude module: 'groovy-all'
+    }
+    testRuntime files(createClasspathManifest)
+}
+
+group = '<%= projectGroup %>'
+description = '<%= projectDesc %>'
+
+github {
+    user '<%= githubUser %>'
+    license 'MIT'
+}
+
+<% if (mirrorToJcenter) { %>pom {
+    developers {
+        developer {
+            id "<%= githubUser %>"
+            name "<%= authorName %>"
+            email "<%= authorEmail %>"
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? bintrayUser : 'USER'
+    key = project.hasProperty('bintrayKey') ? bintrayKey : 'KEY'
+    publications = ['maven']
+    dryRun = false
+    publish = true
+    pkg {
+        repo = '<%= bintrayRepo %>'
+        name = project.name
+        desc = project.description
+        labels = [<%- bintrayTags %>]
+        publicDownloadNumbers = true
+        version {
+            gpg {
+                sign = <%= bintraySignFiles %>
+                passphrase = project.hasProperty('gpgPassphrase') ? gpgPassphrase : ''
+            }
+            mavenCentralSync {
+                sync = false // enable after project acceptance in jcenter
+                user = project.hasProperty('sonatypeUser') ? sonatypeUser : 'USER'
+                password = project.hasProperty('sonatypePassword') ? sonatypePassword : 'PASSWORD'
+            }
+        }
+    }
+}<% } %>
+
+pluginBundle {
+    description = '<%= pluginPortalDesc %>'
+    tags = [<%- pluginPortalTags %>]
+
+    plugins {
+        githubInfoPlugin {
+            id = '<%= pluginFullName %>'
+            displayName = project.description
+        }
+    }
+
+    <% if (pluginPortalUseCustomGroup) { %>mavenCoordinates {
+        groupId = project.group
+        artifactId = project.name
+    }<% } %>
+}
+// HOTFIX: plugin-publish don't see properties in global gradle.properties
+System.setProperty('gradle.publish.key', project.properties['gradle.publish.key'] ?: '')
+System.setProperty('gradle.publish.secret', project.properties['gradle.publish.secret'] ?: '')
+
+afterReleaseBuild {
+    dependsOn = [<% if (mirrorToJcenter) { %>bintrayUpload, <% } %>publishPlugins]
+    doLast {
+        logger.warn "RELEASED $project.group:$project.name:$project.version"
+    }
+}
+
+test {
+    testLogging {
+        events "skipped", "failed", "standard_error"
+        exceptionFormat "full"
+    }
+    maxHeapSize = "512m"
+}
+
+dependencyUpdates.revision = 'release'

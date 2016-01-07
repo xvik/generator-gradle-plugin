@@ -1,0 +1,2 @@
+### <%= projectVersion %> (<%= reverseDate %>)
+* Initial release

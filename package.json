@@ -1,0 +1,42 @@
+{
+  "name": "generator-gradle-plugin",
+  "version": "1.0.0",
+  "description": "Gradle plugin project generator, hosted on github, build with gradle and published to gradle portal, jcenter and maven central",
+  "license": "MIT",
+  "main": "app/index.js",
+  "homepage": "https://github.com/xvik/generator-gradle-plugin",
+  "bugs": "https://github.com/xvik/generator-gradle-plugin/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/xvik/generator-gradle-plugin.git"
+  },
+  "author": {
+    "name": "Vyacheslav Rusakov",
+    "email": "vyarus@gmail.com",
+    "url": "https://github.com/xvik"
+  },
+  "engines": {
+    "node": ">=4.1.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "gradle",
+    "plugin"
+  ],
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "yeoman-generator": "0.21.1",
+    "yo-java-helper": "^1.0.0"
+  },
+  "devDependencies": {
+    "fs-readdir-recursive": "^1.0.0",
+    "mocha": "*",
+    "mocha-jshint": "2.2.5"
+  }
+}
