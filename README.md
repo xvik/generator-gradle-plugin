@@ -59,7 +59,7 @@ $ npm install -g yo
 Install generator:
 
 ```bash
-$ npm install -g generator-lib-java
+$ npm install -g generator-gradle-plugin
 ```
 
 ### Github setup
