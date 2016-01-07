@@ -135,7 +135,7 @@ module.exports = yeoman.generators.Base.extend({
                             }
                             helper.getGithubData(input, (err, res) => {
                                 if (err) {
-                                    done(res)
+                                    done(res);
                                 } else {
                                     githubData = res;
                                     done(true);
@@ -372,7 +372,7 @@ module.exports = yeoman.generators.Base.extend({
         },
 
         checkGradleConfig: function () {
-            var conf = this.context.gradleConf;
+            var conf = this.context.gradleConf || {};
 
             var warnBintray = this.mirrorToJcenter && (!conf.bintrayUser || !conf.bintrayKey),
                 warnSign = this.bintraySignFiles && !conf.gpgPassphrase,
