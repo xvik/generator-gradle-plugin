@@ -1,3 +1,4 @@
+### 1.1.0 (2016-04-15)
 * Update com.gradle.plugin-publish plugin 0.9.2 -> 0.9.4
     - Removed plugin portal credential properties hack from generated build.gradle (global properties fixed in plugin)
 * Update gradle-versions-plugin 0.11.3 -> 0.12.0
