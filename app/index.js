@@ -103,7 +103,7 @@ module.exports = yeoman.generators.Base.extend({
             this.log(`                                                                               v.${chalk.green(this.context.pkg.version)}`);
             this.log();
             if (this.context.updateMode) {
-                this.log(`Updating library ${chalk.red(this.appname)}, generated with v.${chalk.green(this.context.usedGeneratorVersion)}`);
+                this.log(`Updating plugin ${chalk.red(this.appname)}, generated with v.${chalk.green(this.context.usedGeneratorVersion)}`);
                 if (this.context.allAnswered && !this.options.ask) {
                     this.log();
                     this.log('Using stored answers from .yo-rc.json. \n' +
