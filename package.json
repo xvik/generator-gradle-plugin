@@ -1,6 +1,6 @@
 {
   "name": "generator-gradle-plugin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Gradle plugin project generator, hosted on github, build with gradle and published to gradle portal, jcenter and maven central",
   "license": "MIT",
   "main": "app/index.js",
