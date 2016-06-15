@@ -136,11 +136,27 @@ Project setup ready, start coding!
 
 #### Build upgrade
 
-If generator started in folder with already generated project - it will work in update mode.
-This will allow you to easily update existing build with new generator version.
+If you preserve `.yo-rc.json` file (your answers) in generated project root you will be able to use update mode.
 
-Update mode skips some files to reduce update to only meaningful files (e.g. no need to update CHANGELOG.md, gradle.properties etc).
-Update will use previous answers by default.
+Run generator project directory:
+
+```bash
+$ cd my-project
+$ yo gradle-plugin 
+```
+
+Generator will work in update mode: it will use answers stored in .yo-rc.json and re-generate project files.
+It will not generate sample sources again and also will not touch: CHANGELOG.md, README.md, gradle.properties, LICENSE and settings.gradle.
+
+It updates:
+* Project gradle (wrapper files, scripts and version in build.gradle)
+* Plugin versions (build.gradle)
+* Travis config
+* gitignore
+
+This mode is useful when project isn't changed much after generation. In case when you have multiple projects 
+it greatly simplifies projects upgrade: doing all changes manually could lead to forgotten changes, 
+but with generator its impossible to forget something because all changes are always done.
 
 Start update without local changes and after generation look git changes and correct
 (usually only main build.gradle requires modifications after update).
@@ -216,6 +232,9 @@ Releases plugin. Read release process section below before performing first rele
 
 [Sample build file](https://github.com/xvik/generator-gradle-plugin/wiki/Build-file-annotated) with comments.
 
+Note that gradle api dependencies are not specified directly, but project will implicitly have 
+`localGroovy()`, `gradleApi()` and `gradleTestKit()` dependencies applied by [java-gradle-plugin](https://docs.gradle.org/current/userguide/javaGradle_plugin.html)
+
 Used gradle plugins:
 * [groovy](http://www.gradle.org/docs/current/userguide/groovy_plugin.html) as main used language
 * [java-gradle-plugin](https://docs.gradle.org/current/userguide/javaGradle_plugin.html) assist plugin development
@@ -255,9 +274,6 @@ Project build tests are good for checking configuration. They run in the same vm
 
 TestKit tests are useful to validate tasks execution (especially if there are files operations involved). These tests use 
 real gradle build run. TestKit tests may be launched even for [different gradle versions](https://docs.gradle.org/current/javadoc/org/gradle/testkit/runner/GradleRunner.html#withGradleVersion(java.lang.String)).
-
-Important: to be able to run TestKit tests directly from IDE, you need to call [createClasspathManifest](https://docs.gradle.org/current/userguide/test_kit.html#N14A5F)
-task first which will generate tests classpath file.
 
 For more tests examples see [my plugins](#example-projects) sources. 
 

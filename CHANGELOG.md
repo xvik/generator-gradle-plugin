@@ -1,3 +1,4 @@
+### 1.2.0 (2016-06-16)
 * Update gradle 2.9 -> 2.14
   - build.gradle: removed test classpath task used to provide plugin classes for TestKit run (now gradle handle it)
   - build.gradle: use findProperty instead of hasProperty ? lookup : default
