@@ -1,3 +1,12 @@
+* Update gradle 2.9 -> 2.14
+  - build.gradle: removed test classpath task used to provide plugin classes for TestKit run (now gradle handle it)
+  - build.gradle: use findProperty instead of hasProperty ? lookup : default
+  - AbstractKitTest.java: removed classpath file resolution
+  - Remove Preconditions usage in generated plugin (gradle transitive deps are not visible now)
+* Update gradle-release-plugin 2.3.5 -> 2.4.0  
+* Update gradle-java-lib-plugin 1.0.1 -> 1.0.2
+* Fix plugin closure name in pluginPublish section (build.gradle)
+
 ### 1.1.0 (2016-04-15)
 * Update com.gradle.plugin-publish plugin 0.9.2 -> 0.9.4
     - Removed plugin portal credential properties hack from generated build.gradle (global properties fixed in plugin)

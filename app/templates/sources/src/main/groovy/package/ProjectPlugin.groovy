@@ -1,8 +1,8 @@
 package <%= projectPackage %>
 
-import com.google.common.base.Preconditions
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.GradleException
 
 /**
  * <%= pluginName %> plugin.
@@ -17,8 +17,9 @@ class <%= pluginClassPrefix %>Plugin implements Plugin<Project> {
         <%= pluginClassPrefix %>Extension extension = project.extensions.create('<%= pluginExtensionName %>', <%= pluginClassPrefix %>Extension)
 
         project.afterEvaluate {
-            Preconditions.checkNotNull(extension.foo, '<%= pluginExtensionName %>.foo configuration required')
-            Preconditions.checkNotNull(extension.bar, '<%= pluginExtensionName %>.bar configuration required')
+            if (extension.bar == null) {
+                throw new GradleException('<%= pluginExtensionName %>.bar configuration required')
+            }
         }
     }
 }
