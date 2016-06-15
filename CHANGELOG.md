@@ -6,6 +6,9 @@
 * Update gradle-release-plugin 2.3.5 -> 2.4.0  
 * Update gradle-java-lib-plugin 1.0.1 -> 1.0.2
 * Fix plugin closure name in pluginPublish section (build.gradle)
+* Update mode:
+  - now able to overwrite travis,yml, .gitignore and gradle script files 
+  - fix maven central sync logic
 
 ### 1.1.0 (2016-04-15)
 * Update com.gradle.plugin-publish plugin 0.9.2 -> 0.9.4

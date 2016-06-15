@@ -56,10 +56,10 @@ bintray {
         version {
             gpg {
                 sign = <%= bintraySignFiles %>
-                passphrase = findProperty('gpgPassphrase') ? gpgPassphrase : ''
+                passphrase = findProperty('gpgPassphrase')
             }
             mavenCentralSync {
-                sync = false // enable after project acceptance in jcenter
+                sync = <%= mavenCentralSync %>
                 user = findProperty('sonatypeUser')
                 password = findProperty('sonatypePassword')
             }

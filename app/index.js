@@ -310,10 +310,12 @@ module.exports = yeoman.generators.Base.extend({
             this.helper.selectTargetFolder();
             this.helper.saveConfiguration(questions, this.options.noglobal ? [] : globals);
 
-            // synchronization with maven central is impossible on first release, but later
-            // it must be set to true (if required)
-            // so always set it as false on initial generation
-            this.mavenCentralSync = false;
+            if (!this.context.updateMode) {
+                // synchronization with maven central is impossible on first release, but later
+                // it must be set to true (if required)
+                // so always set it as false on initial generation
+                this.mavenCentralSync = false;
+            }
 
             this.bintrayTags = this.helper.quoteTagsList(this.bintrayTags);
             this.pluginPortalTags = this.helper.quoteTagsList(this.pluginPortalTags);
@@ -336,10 +338,6 @@ module.exports = yeoman.generators.Base.extend({
     writing: {
         base: function () {
             var writeOnceFiles = [
-                'gradlew',
-                'gradlew.bat',
-                '.gitignore',
-                '.travis.yml',
                 'CHANGELOG.md',
                 'README.md',
                 'gradle.properties',
@@ -410,7 +408,7 @@ module.exports = yeoman.generators.Base.extend({
         },
 
         mavenCentralNotice: function () {
-            if (this.config.get('mavenCentralSync')) {
+            if (this.config.get('mavenCentralSync') && !this.context.updateMode) {
                 this.log();
                 this.log(chalk.red('IMPORTANT') + ' Maven central sync is impossible on first release, so ' +
                     'it was set to false in build.gradle (read doc for more details).');
