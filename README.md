@@ -18,6 +18,13 @@ Features:
 * Code quality checks with CodeNarc
 * [Release process](https://github.com/researchgate/gradle-release#introduction) (like maven release)
 
+### Known issue
+
+Gradle 2.13+ has a [bug with console input](https://issues.gradle.org/browse/GRADLE-3446). As a result, 
+during release version confirm questions are [not visible](https://github.com/researchgate/gradle-release/issues/185).
+
+Issue is not blocking and only affects release process: simply hit enter for questions (and be sure version in properties file is correct). 
+
 ### Example projects
 
 * [gradle-quality-plugin](https://github.com/xvik/gradle-quality-plugin)
