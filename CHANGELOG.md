@@ -1,4 +1,4 @@
-* Update gradle 2.14 -> 2.14.1
+* Update gradle 2.14 -> 3.0
 * Update com.gradle.plugin-publish plugin 0.9.4 -> 0.9.5
 * Update gradle-bintray-plugin 1.6 -> 1.7.1
 * Update gradle-versions-plugin 0.12.0 -> 0.13.0
