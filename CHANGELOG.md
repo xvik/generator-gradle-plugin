@@ -1,3 +1,4 @@
+### 1.3.0 (2016-09-06)
 * Update gradle 2.14 -> 3.0
 * Update com.gradle.plugin-publish plugin 0.9.4 -> 0.9.5
 * Update gradle-bintray-plugin 1.6 -> 1.7.1
