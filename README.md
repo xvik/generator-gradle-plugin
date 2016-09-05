@@ -284,6 +284,9 @@ real gradle build run. TestKit tests may be launched even for [different gradle 
 
 For more tests examples see [my plugins](#example-projects) sources. 
 
+NOTE: if tests failed to run in your IDE, then run tests from gradle first (tests task). Gradle generates classpath file before running TestKit tests 
+(tests can't work without this file). When tests run from IDE, file generation is not triggered automatically, so have to keep in mind this workaround.
+
 ### Release process
 
 #### Before first release
