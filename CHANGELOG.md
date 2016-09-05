@@ -5,6 +5,7 @@
 * Update gradle-java-lib-plugin 1.0.2 -> 1.0.4
 * Update gradle-quality-plugin 1.3.0 -> 2.0.0
 * Update gradle-release-plugin 2.4.0 -> 2.4.1  
+* Use @CompileStatic for generated sources
 
 ### 1.2.0 (2016-06-16)
 * Update gradle 2.9 -> 2.14
