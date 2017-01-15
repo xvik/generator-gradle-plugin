@@ -1,8 +1,7 @@
 'use strict';
 
-const yeoman = require('yeoman-generator'),
-    chalk = require('chalk'),
-    Helper = require('yo-java-helper');
+const chalk = require('chalk'),
+    JavaGenerator = require('yo-java-helper');
 
 /**
  * Generator variables, available for templates:
@@ -45,7 +44,7 @@ const questions = [
  - <% %> any logic (script block)
  */
 
-var globals = [
+const globals = [
     'githubUser',
     'authorName',
     'authorEmail',
@@ -57,11 +56,10 @@ var globals = [
 ];
 
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = class extends JavaGenerator {
 
-    constructor: function () {
-        yeoman.generators.Base.apply(this, arguments);
-        this.helper = new Helper(this, require('../package.json'));
+    constructor(args, opts) {
+        super(args, opts, require('../package.json'));
 
         this.option('offline', {
             desc: 'Disables github user lookup',
@@ -79,128 +77,109 @@ module.exports = yeoman.generators.Base.extend({
             type: Boolean,
             defaults: false
         });
-    },
+    }
 
-    initializing: {
-        init: function () {
-            this.helper.initConfig(questions);
-            this.helper.initDateVars();
-        },
+    initializing() {
+        // init
+        this.$initConfig(questions);
+        this.$initDateVars();
 
-        readGradleConfig: function () {
-            var done = this.async();
-            this.context.gradleConfPath = this.helper.resolveFileFromUserHome('.gradle/gradle.properties');
-            this.helper.readProperties(this.context.gradleConfPath, res => {
-                this.context.gradleConf = res;
-                done();
-            });
-        }
-    },
 
-    prompting: {
-        greeting: function () {
-            this.log(chalk.yellow(this.helper.readBanner('banner.txt')));
-            this.log(`                                                                               v.${chalk.green(this.context.pkg.version)}`);
-            this.log();
-            if (this.context.updateMode) {
-                this.log(`Updating plugin ${chalk.red(this.appname)}, generated with v.${chalk.green(this.context.usedGeneratorVersion)}`);
-                if (this.context.allAnswered && !this.options.ask) {
-                    this.log();
-                    this.log('Using stored answers from .yo-rc.json. \n' +
-                        'If you need to re-run questions use --ask generator option.');
-                }
+        // read gradle config
+        const done = this.async();
+        this.context.gradleConfPath = this.$resolveFileFromUserHome('.gradle/gradle.properties');
+        this.$readProperties(this.context.gradleConfPath, res => {
+            this.context.gradleConf = res;
+            done();
+        });
+    }
+
+    prompting() {
+        // greeting
+        this.log(chalk.yellow(this.$readBanner('banner.txt')));
+        this.log(`                                                                               v.${chalk.green(this.context.pkg.version)}`);
+        this.log();
+        if (this.context.updateMode) {
+            this.log(`Updating plugin ${chalk.red(this.appname)}, generated with v.${chalk.green(this.context.usedGeneratorVersion)}`);
+            if (this.context.allAnswered && !this.options.ask) {
                 this.log();
+                this.log('Using stored answers from .yo-rc.json. \n' +
+                    'If you need to re-run questions use --ask generator option.');
             }
-        },
+            this.log();
+        }
 
-        askForGithub: function () {
-            var options = this.options;
-            if (!options.ask && this.context.allAnswered) {
-                return;
-            }
+        // ask for github
+        const options = this.options;
+        if (!options.ask && this.context.allAnswered) {
+            return;
+        }
 
-            var githubData = {},
-                helper = this.helper,
-                prompts = [
-                    {
-                        type: 'input',
-                        name: 'githubUser',
-                        message: 'GitHub user name',
-                        default: this.helper.defaultValue('githubUser'),
-                        validate: function (input) {
-                            var done = this.async();
+        let githubData = {},
+            gen = this,
+            prompts = [
+                {
+                    type: 'input',
+                    name: 'githubUser',
+                    message: 'GitHub user name',
+                    default: this.$defaultValue('githubUser'),
+                    validate: function (input) {
+                        return new Promise((resolve) => {
                             if (options.offline) {
-                                done(!input ? 'Github user required' : true);
+                                if (input) {
+                                    resolve(true);
+                                } else {
+                                    resolve('Github user required');
+                                }
                                 return;
                             }
-                            helper.getGithubData(input, (err, res) => {
+                            gen.$getGithubData(input, (err, res) => {
                                 if (err) {
-                                    done(res);
+                                    resolve(err);
                                 } else {
                                     githubData = res;
-                                    done(true);
+                                    resolve(true);
                                 }
                             });
-                        }
-                    },
-                    {
-                        type: 'input',
-                        name: 'authorName',
-                        message: 'Author name',
-                        default: () => githubData.name || this.helper.defaultValue('authorName'),
-                        validate: input => !input ? 'Author name required' : true
-                    },
-                    {
-                        type: 'input',
-                        name: 'authorEmail',
-                        message: 'Author email',
-                        default: () => githubData.email || this.helper.defaultValue('authorEmail'),
-                        validate: input => !input ? 'Author email required' : true
+                        });
                     }
-                ];
-            this.helper.prompt(prompts, questions);
-        },
+                },
+                {
+                    type: 'input',
+                    name: 'authorName',
+                    message: 'Author name',
+                    default: () => githubData.name || this.$defaultValue('authorName'),
+                    validate: input => !input ? 'Author name required' : true
+                },
+                {
+                    type: 'input',
+                    name: 'authorEmail',
+                    message: 'Author email',
+                    default: () => githubData.email || this.$defaultValue('authorEmail'),
+                    validate: input => !input ? 'Author email required' : true
+                }
+            ];
 
-        askForLibName: function () {
-            if (this.context.updateMode) {
-                // update must be started from project folder - no need to ask for name
-                return;
-            }
-
-            this.log(`Accept default library name ${chalk.red(this.appname)} to generate in current folder, otherwise new folder will be created`);
-
-            var prompts = [{
-                name: 'projectName',
-                message: 'Project name (gradle-<plugin name>-plugin)',
-                default: this.projectName || this.appname,
-                filter: this.helper.folderName
-            }];
-
-            this.helper.prompt(prompts, ['projectName'], props => this.appname = props.projectName);
-        },
-
-        other: function () {
+        let other = () => {
             if (this.context.allAnswered && !this.options.ask) {
                 return;
             }
 
-            var disableOnUpdate = function () {
-                return !this.context.updateMode;
-            }.bind(this);
+            const disableOnUpdate = () => !this.context.updateMode;
 
-            var prompts = [
+            prompts = [
                 {
                     type: 'input',
                     name: 'projectGroup',
                     message: 'Maven artifact group',
-                    validate: this.helper.validatePackage,
-                    default: this.helper.defaultValue('projectGroup', 'com.mycompany')
+                    validate: this.$validatePackage,
+                    default: this.$defaultValue('projectGroup', 'com.mycompany')
                 },
                 {
                     type: 'input',
                     name: 'projectPackage',
                     message: 'Base package',
-                    validate: this.helper.validatePackage,
+                    validate: this.$validatePackage,
                     when: disableOnUpdate,
                     default: props => this.projectPackage || props.projectGroup + '.' + this.projectName
                         .replace(/gradle-|-plugin/g, '').replace(/(\s+|-|_)/g, '.')
@@ -253,7 +232,7 @@ module.exports = yeoman.generators.Base.extend({
                     type: 'input',
                     name: 'bintrayUser',
                     message: 'Bintray user name (used for badge generation only)',
-                    default: this.helper.defaultValue('bintrayUser'),
+                    default: this.$defaultValue('bintrayUser'),
                     validate: input => !input ? 'Bintray user name required' : true,
                     when: props => props.mirrorToJcenter
                 },
@@ -261,7 +240,7 @@ module.exports = yeoman.generators.Base.extend({
                     type: 'input',
                     name: 'bintrayRepo',
                     message: 'Bintray maven repository name',
-                    default: this.helper.defaultValue('bintrayRepo'),
+                    default: this.$defaultValue('bintrayRepo'),
                     validate: input => !input ? 'Bintray repository name required' : true,
                     when: props => props.mirrorToJcenter
                 },
@@ -288,131 +267,148 @@ module.exports = yeoman.generators.Base.extend({
                 }
             ];
 
-            this.helper.prompt(prompts, questions);
-        }
-    },
+            return this.$prompt(prompts, questions);
+        };
 
-    configuring: {
-
-        configure: function () {
-            if (!this.mirrorToJcenter) {
-                this.bintraySignFiles = false;
-                this.mavenCentralSync = false;
-                this.bintrayUser = '';
-                this.bintrayRepo = '';
-                this.bintrayTags = '';
-                this.bintraySignFiles = false;
-                this.mavenCentralSync = false;
-            } else {
-                this.pluginPortalUseCustomGroup = true;
-            }
-
-            this.helper.selectTargetFolder();
-            this.helper.saveConfiguration(questions, this.options.noglobal ? [] : globals);
-
-            if (!this.context.updateMode) {
-                // synchronization with maven central is impossible on first release, but later
-                // it must be set to true (if required)
-                // so always set it as false on initial generation
-                this.mavenCentralSync = false;
-            }
-
-            this.bintrayTags = this.helper.quoteTagsList(this.bintrayTags);
-            this.pluginPortalTags = this.helper.quoteTagsList(this.pluginPortalTags);
-            this.pluginName = this.projectName.replace(/gradle-|-plugin/g, '');
-            this.pluginClassPrefix = this.helper.generateProjectClassPrefix(this.pluginName);
-            this.pluginFullName = `${this.projectGroup}.${this.pluginName}`;
-            this.pluginExtensionName = this.pluginClassPrefix.substring(0, 1).toLowerCase() + this.pluginClassPrefix.substring(1);
-        },
-
-        selectJavaVersion: function () {
-            var travis = {
-                '1.6': 'oraclejdk7',
-                '1.7': 'oraclejdk7',
-                '1.8': 'oraclejdk8'
-            };
-            this.travisJdk = travis[this.targetJava];
-        }
-    },
-
-    writing: {
-        base: function () {
-            var writeOnceFiles = [
-                'CHANGELOG.md',
-                'README.md',
-                'gradle.properties',
-                'LICENSE',
-                'settings.gradle'
-            ];
-            this.gradlewExists = this.helper.exists('gradlew');
-            this.helper.copy('gradle-base', {writeOnceFiles: writeOnceFiles});
-            this.helper.copyTpl('project-base', {writeOnceFiles: writeOnceFiles});
-        },
-
-        sources: function () {
-            if (!this.helper.exists('src/main')) {
-                this.helper.copySources(this.projectPackage, 'sources', [
-                    {regex: /\/Project/, replace: '/' + this.pluginClassPrefix},
-                    {regex: /\/plugin\.properties/, replace: `/${this.pluginFullName}.properties`}
-                ]);
-            } else {
-                this.log(chalk.yellow('     skip ') + 'sources generation');
-            }
-        }
-    },
-
-    end: {
-        chmod: function () {
-            // setting executable flag manually
-            if (!this.gradlewExists) {
-                this.helper.setExecutableFlag('gradlew');
-            }
-        },
-
-        checkGradleConfig: function () {
-            var conf = this.context.gradleConf || {};
-
-            var warnBintray = this.mirrorToJcenter && (!conf.bintrayUser || !conf.bintrayKey),
-                warnSign = this.bintraySignFiles && !conf.gpgPassphrase,
-                warnCentral = this.config.get('mavenCentralSync') && (!conf.sonatypeUser || !conf.sonatypePassword),
-                warnPortal = !conf['gradle.publish.key'] || !conf['gradle.publish.secret'];
-
-            if (!warnBintray && !warnSign && !warnCentral && !warnPortal) {
+        let askLibName = () => {
+            if (this.context.updateMode) {
+                // update must be started from project folder - no need to ask for name
                 return;
             }
 
-            this.log();
-            this.log(chalk.red('IMPORTANT') + ' you need to add the following configurations to global gradle file (required for release): ' +
-                '\n ' + chalk.green(this.context.gradleConfPath));
-            if (warnPortal) {
-                this.log();
-                this.log(chalk.yellow('gradle.publish.key') + '=<plugins portal key>');
-                this.log(chalk.yellow('gradle.publish.secret') + '=<plugins portal secret>');
-            }
-            if (warnBintray) {
-                this.log();
-                this.log(chalk.yellow('bintrayUser') + '=' + this.bintrayUser);
-                this.log(chalk.yellow('bintrayKey') + '=<api key (go to bintray profile page, hit edit and access "api keys" section>');
-            }
-            if (warnSign) {
-                this.log();
-                this.log('If your gpg certificate requires passphrase you need to configure it (for automatic signing):');
-                this.log(chalk.yellow('gpgPassphrase') + '=<gpgPassphrase>');
-            }
-            if (warnCentral) {
-                this.log();
-                this.log('If you going to automatically sync with maven central, you need to configure sonatype user:');
-                this.log(chalk.yellow('sonatypeUser') + '=<sonatype user>');
-                this.log(chalk.yellow('sonatypePassword') + '=<sonatype password>');
-            }
-        },
+            this.log(`Accept default library name ${chalk.red(this.appname)} to generate in current folder, otherwise new folder will be created`);
 
-        mavenCentralNotice: function () {
-            if (this.config.get('mavenCentralSync') && !this.context.updateMode) {
-                this.log();
-                this.log(chalk.red('IMPORTANT') + ' Maven central sync is impossible on first release, so ' +
-                    'it was set to false in build.gradle (read doc for more details).');
-            }
+            prompts = [{
+                name: 'projectName',
+                message: 'Project name (gradle-<plugin name>-plugin)',
+                default: this.projectName || this.appname,
+                filter: this.$folderName
+            }];
+
+            return this.$prompt(prompts, ['projectName']).then(props => {
+                this.appname = props.projectName;
+                return other();
+            });
+        };
+
+        return this.$prompt(prompts, questions).then(askLibName);
+    }
+
+    configuring() {
+
+        // configure
+        if (!this.mirrorToJcenter) {
+            this.bintraySignFiles = false;
+            this.mavenCentralSync = false;
+            this.bintrayUser = '';
+            this.bintrayRepo = '';
+            this.bintrayTags = '';
+            this.bintraySignFiles = false;
+            this.mavenCentralSync = false;
+        } else {
+            this.pluginPortalUseCustomGroup = true;
+        }
+
+        this.$selectTargetFolder();
+        this.$saveConfiguration(questions, this.options.noglobal ? [] : globals);
+
+        if (!this.context.updateMode) {
+            // synchronization with maven central is impossible on first release, but later
+            // it must be set to true (if required)
+            // so always set it as false on initial generation
+            this.mavenCentralSync = false;
+        }
+
+        this.bintrayTags = this.$quoteTagsList(this.bintrayTags);
+        this.pluginPortalTags = this.$quoteTagsList(this.pluginPortalTags);
+        this.pluginName = this.projectName.replace(/gradle-|-plugin/g, '');
+        this.pluginClassPrefix = this.$generateProjectClassPrefix(this.pluginName);
+        this.pluginFullName = `${this.projectGroup}.${this.pluginName}`;
+        this.pluginExtensionName = this.pluginClassPrefix.substring(0, 1).toLowerCase() + this.pluginClassPrefix.substring(1);
+
+        // select java version
+        const travis = {
+            '1.6': 'oraclejdk7',
+            '1.7': 'oraclejdk7',
+            '1.8': 'oraclejdk8'
+        };
+        this.travisJdk = travis[this.targetJava];
+    }
+
+    writing() {
+        // base
+        const writeOnceFiles = [
+            'CHANGELOG.md',
+            'README.md',
+            'gradle.properties',
+            'LICENSE',
+            'settings.gradle'
+        ];
+        this.gradlewExists = this.$exists('gradlew');
+        this.$copy('gradle-base', {writeOnceFiles: writeOnceFiles});
+        this.$copyTpl('project-base', {writeOnceFiles: writeOnceFiles});
+
+
+        // sources
+        if (!this.$exists('src/main')) {
+            this.$copySources(this.projectPackage, 'sources', [
+                {regex: /\/Project/, replace: '/' + this.pluginClassPrefix},
+                {regex: /\/plugin\.properties/, replace: `/${this.pluginFullName}.properties`}
+            ]);
+        } else {
+            this.log(chalk.yellow('     skip ') + 'sources generation');
         }
     }
-});
+
+    end() {
+        // chmod
+        // setting executable flag manually
+        if (!this.gradlewExists) {
+            this.$setExecutableFlag('gradlew');
+        }
+
+        // check gradle config
+        let conf = this.context.gradleConf || {},
+            warnBintray = this.mirrorToJcenter && (!conf.bintrayUser || !conf.bintrayKey),
+            warnSign = this.bintraySignFiles && !conf.gpgPassphrase,
+            warnCentral = this.config.get('mavenCentralSync') && (!conf.sonatypeUser || !conf.sonatypePassword),
+            warnPortal = !conf['gradle.publish.key'] || !conf['gradle.publish.secret'];
+
+        if (!warnBintray && !warnSign && !warnCentral && !warnPortal) {
+            return;
+        }
+
+        this.log();
+        this.log(chalk.red('IMPORTANT') + ' you need to add the following configurations to global gradle file (required for release): ' +
+            '\n ' + chalk.green(this.context.gradleConfPath));
+        if (warnPortal) {
+            this.log();
+            this.log(chalk.yellow('gradle.publish.key') + '=<plugins portal key>');
+            this.log(chalk.yellow('gradle.publish.secret') + '=<plugins portal secret>');
+        }
+        if (warnBintray) {
+            this.log();
+            this.log(chalk.yellow('bintrayUser') + '=' + this.bintrayUser);
+            this.log(chalk.yellow('bintrayKey') + '=<api key (go to bintray profile page, hit edit and access "api keys" section>');
+        }
+        if (warnSign) {
+            this.log();
+            this.log('If your gpg certificate requires passphrase you need to configure it (for automatic signing):');
+            this.log(chalk.yellow('gpgPassphrase') + '=<gpgPassphrase>');
+        }
+        if (warnCentral) {
+            this.log();
+            this.log('If you going to automatically sync with maven central, you need to configure sonatype user:');
+            this.log(chalk.yellow('sonatypeUser') + '=<sonatype user>');
+            this.log(chalk.yellow('sonatypePassword') + '=<sonatype password>');
+        }
+
+
+        // maven central notice
+        if (this.config.get('mavenCentralSync') && !this.context.updateMode) {
+            this.log();
+            this.log(chalk.red('IMPORTANT') + ' Maven central sync is impossible on first release, so ' +
+                'it was set to false in build.gradle (read doc for more details).');
+        }
+    }
+};

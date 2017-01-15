@@ -1,8 +1,8 @@
 'use strict';
 
-var path = require('path'),
-    assert = require('yeoman-generator').assert,
-    helpers = require('yeoman-generator').test,
+let path = require('path'),
+    assert = require('yeoman-assert'),
+    helpers = require('yeoman-test'),
     read = require('fs-readdir-recursive'),
     execFile = require('child_process').execFile;
 
@@ -17,7 +17,7 @@ function sources(file) {
 }
 
 function runGradle(targetDir, done) {
-    var isWin = /^win/.test(process.platform),
+    const isWin = /^win/.test(process.platform),
         targetFile = targetDir + '/gradlew' + (isWin ? '.bat' : '');
     execFile(targetFile, ['check'], function (err, stdout, stderr) {
         console.log(stdout);
@@ -30,7 +30,7 @@ function runGradle(targetDir, done) {
 }
 
 describe('check all options enabled', function () {
-    var appPath = path.join(__dirname, '../app'),
+    const appPath = path.join(__dirname, '../app'),
         targetPath = path.join(__dirname, 'temp');
 
 
@@ -78,7 +78,7 @@ describe('check all options enabled', function () {
 });
 
 describe('check portal publishing only', function () {
-    var appPath = path.join(__dirname, '../app'),
+    const appPath = path.join(__dirname, '../app'),
         targetPath = path.join(__dirname, 'temp');
 
 
@@ -122,7 +122,7 @@ describe('check portal publishing only', function () {
 });
 
 describe('check portal publishing with custom group', function () {
-    var appPath = path.join(__dirname, '../app'),
+    const appPath = path.join(__dirname, '../app'),
         targetPath = path.join(__dirname, 'temp');
 
 
@@ -166,7 +166,7 @@ describe('check portal publishing with custom group', function () {
 });
 
 describe('check project name convention', function () {
-    var appPath = path.join(__dirname, '../app'),
+    const appPath = path.join(__dirname, '../app'),
         targetPath = path.join(__dirname, 'temp');
 
 
@@ -215,7 +215,7 @@ describe('check project name convention', function () {
 
 
 describe('check complex project name convention', function () {
-    var appPath = path.join(__dirname, '../app'),
+    const appPath = path.join(__dirname, '../app'),
         targetPath = path.join(__dirname, 'temp');
 
 
