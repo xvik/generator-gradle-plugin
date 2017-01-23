@@ -1,3 +1,10 @@
+* Yeoman generator 1.0 compatibility
+* Update gradle 3.0 -> 3.3
+* Update gradle-bintray-plugin 1.7.1 -> 1.7.3
+* Update gradle-release-plugin 2.4.1 -> 2.5.0
+* Update plugin-publish plugin 0.9.5 -> 0.9.7
+* Update gradle-quality-plugin 2.0.0 -> 2.1.0
+
 ### 1.3.0 (2016-09-06)
 * Update gradle 2.14 -> 3.0
 * Update com.gradle.plugin-publish plugin 0.9.4 -> 0.9.5
