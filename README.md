@@ -1,4 +1,4 @@
-#Gradle plugin yeoman generator
+# Gradle plugin yeoman generator
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://www.opensource.org/licenses/MIT)
 [![NPM version](http://img.shields.io/npm/v/generator-gradle-plugin.svg)](http://badge.fury.io/js/generator-gradle-plugin)
