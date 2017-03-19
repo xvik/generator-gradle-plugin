@@ -1,4 +1,4 @@
-#<%= projectName %>
+# <%= projectName %>
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://www.opensource.org/licenses/MIT)
 [![Build Status](http://img.shields.io/travis/<%= githubUser %>/<%= projectName %>.svg)](https://travis-ci.org/<%= githubUser %>/<%= projectName %>)
 
