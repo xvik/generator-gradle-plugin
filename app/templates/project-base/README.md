@@ -44,5 +44,5 @@ plugins {
 
 ### Usage
 
--
+---
 [![gradle plugin generator](http://img.shields.io/badge/Powered%20by-%20Gradle%20plugin%20generator-green.svg?style=flat-square)](https://github.com/xvik/generator-gradle-plugin)
