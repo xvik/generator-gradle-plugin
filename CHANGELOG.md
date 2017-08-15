@@ -2,6 +2,7 @@
 * Update gradle-release-plugin 2.5.0 -> 2.6.0
 * Update gradle-quality-plugin 2.1.0 -> 2.3.0
 * Update gradle-versions-plugin 0.13.0 -> 0.15.0
+* Update gradle-java-lib-plugin 1.0.4 -> 1.0.5
 * Update spock to 1.0 -> 1.1
 * Update travis config: 
     - increase check task timeout to 20 min
