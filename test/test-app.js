@@ -35,6 +35,7 @@ describe('check all options enabled', function () {
 
 
     before(function (done) {
+        this.timeout(10000);
         helpers.run(appPath)
             .inDir(targetPath)
             .withOptions({offline: true, noglobal:true})
