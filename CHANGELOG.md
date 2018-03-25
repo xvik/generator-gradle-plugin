@@ -9,7 +9,8 @@
     - Enable jacoco support in testkit base test (AbstractKitTest)
 * Update travis config:
     - Enable coverage sending to [codecov](https://codecov.io/) (with linux tag)
-    - Use openjdk8 for java 6 and 7 (older jdks can't be used on recent ubuntu image)
+    - Use openjdk8 for java 7 (older jdks can't be used on recent ubuntu image)
+* Remove jdk 6 option (as gradle itself requires jdk 7)    
 * Add windows build via [appveyor](https://www.appveyor.com/) 
     - New file .appveyor.yml
     - Coverage uploaded to codecov (with windows flag)

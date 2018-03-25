@@ -208,9 +208,8 @@ module.exports = class extends JavaGenerator {
                     type: 'list',
                     name: 'targetJava',
                     message: 'Target java version (the lowest version you want to be compatible with)',
-                    default: this.targetJava || '1.6',
+                    default: this.targetJava || '1.7',
                     choices: [
-                        {value: '1.6', name: 'Java 6'},
                         {value: '1.7', name: 'Java 7'},
                         {value: '1.8', name: 'Java 8'}
                     ]
@@ -328,7 +327,6 @@ module.exports = class extends JavaGenerator {
 
         // select java version
         const travis = {
-            '1.6': 'oraclejdk8',
             '1.7': 'oraclejdk8',
             '1.8': 'oraclejdk8'
         };
