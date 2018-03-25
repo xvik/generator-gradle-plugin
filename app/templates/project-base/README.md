@@ -1,6 +1,8 @@
 # <%= projectName %>
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://www.opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/travis/<%= githubUser %>/<%= projectName %>.svg)](https://travis-ci.org/<%= githubUser %>/<%= projectName %>)
+[![Appveyor build status](https://ci.appveyor.com/api/projects/status/github/<%= githubUser %>/<%= projectName %>?svg=true)](https://ci.appveyor.com/project/<%= githubUser %>/<%= projectName %>)
+[![codecov](https://codecov.io/gh/<%= githubUser %>/<%= projectName %>/branch/master/graph/badge.svg)](https://codecov.io/gh/<%= githubUser %>/<%= projectName %>)
 
 ### About
 
@@ -10,6 +12,12 @@ Features:
 * Feature 1
 * Feature 2
 
+##### Summary
+
+* Configuration: `<%= pluginName %>`
+* Tasks:
+    - `task1` - brief task description       
+
 ### Setup
 
 Releases are published to <% if (mirrorToJcenter) { %>[bintray jcenter](https://bintray.com/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>/), 
@@ -18,7 +26,7 @@ Releases are published to <% if (mirrorToJcenter) { %>[bintray jcenter](https://
 
 <% if (mirrorToJcenter) { %>
 <!---
-[![JCenter](https://img.shields.io/bintray/v/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>.svg?label=jcenter)](https://bintray.com/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>/_latestVersion)
+[![JCenter](https://api.bintray.com/packages/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>/images/download.svg)](https://bintray.com/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>/_latestVersion)
 [![Maven Central](https://img.shields.io/maven-central/v/<%= projectGroup %>/<%= projectName %>.svg)](https://maven-badges.herokuapp.com/maven-central/<%= projectGroup %>/<%= projectName %>)
 -->
 

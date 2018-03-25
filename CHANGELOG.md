@@ -13,6 +13,10 @@
 * Add windows build via [appveyor](https://www.appveyor.com/) 
     - New file .appveyor.yml
     - Coverage uploaded to codecov (with windows flag)
+* Update README:
+    - Add appveyor and codecov badges    
+    - Replace jcenter badge from shields to bintray native badge (because shields bintray support not working)
+    - Add summary section
 
 ### 1.5.0 (2017-08-17)
 * Update gradle 3.3 -> 4.1
