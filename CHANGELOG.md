@@ -1,3 +1,14 @@
+* Update gradle 4.1 -> 4.6
+* Update plugin-publish plugin 0.9.7 -> 0.9.10
+* Update gradle-quality-plugin 2.3.0 -> 3.0.0
+* Update gradle-bintray-plugin 1.7.3 -> 1.8.0
+* Update gradle-versions-plugin 0.15.0 -> 0.17.0
+* Enable coverage support:
+    - Add jacoco plugin
+    - Add [jacoco-testkit](https://github.com/koral--/jacoco-gradle-testkit-plugin) plugin (get coverage from testkit launches)
+    - Enable jacoco support in testkit base test (AbstractKitTest)
+
+
 ### 1.5.0 (2017-08-17)
 * Update gradle 3.3 -> 4.1
 * Update gradle-release-plugin 2.5.0 -> 2.6.0
