@@ -328,8 +328,8 @@ module.exports = class extends JavaGenerator {
 
         // select java version
         const travis = {
-            '1.6': 'oraclejdk7',
-            '1.7': 'oraclejdk7',
+            '1.6': 'oraclejdk8',
+            '1.7': 'oraclejdk8',
             '1.8': 'oraclejdk8'
         };
         this.travisJdk = travis[this.targetJava];
