@@ -1,3 +1,4 @@
+### 1.6.0 (2018-03-27)
 * Update gradle 4.1 -> 4.6
 * Update plugin-publish plugin 0.9.7 -> 0.9.10
 * Update gradle-quality-plugin 2.3.0 -> 3.0.0

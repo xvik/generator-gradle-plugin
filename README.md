@@ -14,7 +14,8 @@ Features:
 * Plugin sample
 * Tests samples with ProjectBuilder and TestKit
 * Configured for publishing to plugins portal, jcenter and maven central
-* [Travis-ci](https://travis-ci.org/) integration (CI and healthy badge)
+* CI: [travis](https://travis-ci.org/) (linux), [appveyor](https://www.appveyor.com/) (windows)
+* Coverage with jacoco, merged from both win and linux builds in [codecov.io](https://codecov.io/)
 * Code quality checks with CodeNarc
 * [Release process](https://github.com/researchgate/gradle-release#introduction) (like maven release)
 
@@ -28,6 +29,8 @@ Issue is not blocking and only affects release process: simply hit enter for que
 ### Example projects
 
 * [gradle-quality-plugin](https://github.com/xvik/gradle-quality-plugin)
+* [gradle-mkdocs-plugin](https://github.com/xvik/gradle-mkdocs-plugin)
+* [gradle-use-python-plugin](https://github.com/xvik/gradle-use-python-plugin)
 * [gradle-pom-plugin](https://github.com/xvik/gradle-pom-plugin)
 * [gradle-java-lib-plugin](https://github.com/xvik/gradle-java-lib-plugin)
 * [gradle-github-info-plugin](https://github.com/xvik/gradle-github-info-plugin)
@@ -181,7 +184,12 @@ Create [github](https://github.com) repo matching your plugin name and push proj
 
 In github project settings go to `Webhooks & services` and add `travis-ci` service.
 
-Go to [travis](https://travis-ci.org/) and enable your repo.
+Enable repository on services:
+* [travis](https://travis-ci.org/)
+* [appveyor](https://www.appveyor.com/) 
+
+And after next commit windows and linux builds will be performed automatically and combined coverage report
+will be available on [codecov](https://codecov.io/) (badges for all services are already generated in readme). 
 
 Bintray and maven central badges are generated in readme, but commented (uncomment before release).
 
@@ -244,6 +252,7 @@ Note that gradle api dependencies are not specified directly, but project will i
 
 Used gradle plugins:
 * [groovy](http://www.gradle.org/docs/current/userguide/groovy_plugin.html) as main used language
+* [jacoco](https://docs.gradle.org/current/userguide/jacoco_plugin.html) for coverage recording
 * [java-gradle-plugin](https://docs.gradle.org/current/userguide/javaGradle_plugin.html) assist plugin development
 * [com.gradle.plugin-publish](https://plugins.gradle.org/docs/publish-plugin) to publish to gradle plugins portal
 * [maven-publish](http://www.gradle.org/docs/current/userguide/publishing_maven.html) to generate pom and publish to maven repository
@@ -256,12 +265,13 @@ Used gradle plugins:
 * [ru.vyarus.java-lib](https://github.com/xvik/gradle-java-lib-plugin) to prepare java artifacts setup
 * [ru.vyarus.github-info](https://github.com/xvik/gradle-github-info-plugin) to fill in github specific data
 * [ru.vyarus.quality](https://github.com/xvik/gradle-quality-plugin) to configure codenarc plugin and provide advanced reporting
+* [pl.droidsonroids.jacoco.testkit](https://github.com/koral--/jacoco-gradle-testkit-plugin) to spport coverage recordings in testkit based tests
 
 ### Quality
 
 CodeNarc quality plugin is configured by [ru.vyarus.quality plugin](https://github.com/xvik/gradle-quality-plugin).
 
-Read more about [plugin specifics and how to suppress warnings](https://github.com/xvik/gradle-quality-plugin#codenarc)
+Read more about [plugin specifics and how to suppress warnings](http://xvik.github.io/gradle-quality-plugin/3.0.0/tool/codenarc/)
 
 By default, quality checks fail build if any violation found. In order to simply report violations do:
 
