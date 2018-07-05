@@ -1,3 +1,5 @@
+* Update gradle 4.6 -> 4.8.1
+
 ### 1.6.0 (2018-03-27)
 * Update gradle 4.1 -> 4.6
 * Update plugin-publish plugin 0.9.7 -> 0.9.10
