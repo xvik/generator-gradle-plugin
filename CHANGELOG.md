@@ -1,4 +1,7 @@
 * Update gradle 4.6 -> 4.8.1
+* Update et.researchgate.release 4.6.0 -> 4.7.0
+* Update com.jfrog.bintray 1.8.0 -> 1.8.3
+* Update com.github.ben-manes.versions 0.17.0 -> 0.20.0
 
 ### 1.6.0 (2018-03-27)
 * Update gradle 4.1 -> 4.6
