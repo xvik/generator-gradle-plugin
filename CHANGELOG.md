@@ -4,7 +4,7 @@
 * Update com.github.ben-manes.versions 0.17.0 -> 0.20.0
 * Update ru.vyarus.java-lib 1.0.5 -> 1.1.2
 * Update ru.vyarus.quality 3.0.0 -> 3.1.1
-* Add workaround for testkit tests run on windows (timeout)
+* Apply sleep fix for windows builds (test failures workaround)
 
 NOTE: gradle [STABLE_PUBLISHING](https://docs.gradle.org/4.8/userguide/publishing_maven.html#publishing_maven:deferred_configuration) option is enabled by default
 
