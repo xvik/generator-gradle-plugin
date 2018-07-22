@@ -2,9 +2,11 @@
 * Update et.researchgate.release 4.6.0 -> 4.7.0
 * Update com.jfrog.bintray 1.8.0 -> 1.8.4
 * Update com.github.ben-manes.versions 0.17.0 -> 0.20.0
-* Update gradle-java-lib-plugin 1.0.5 -> 1.1.1
-* Update gradle-quality-plugin 3.0.0 -> 3.1.0
-* Apply sleep fix for windows builds (test failures workaround) 
+* Update ru.vyarus.java-lib 1.0.5 -> 1.1.2
+* Update ru.vyarus.quality 3.0.0 -> 3.1.1
+* Add workaround for testkit tests run on windows (timeout)
+
+NOTE: gradle [STABLE_PUBLISHING](https://docs.gradle.org/4.8/userguide/publishing_maven.html#publishing_maven:deferred_configuration) option is enabled by default
 
 ### 1.6.0 (2018-03-27)
 * Update gradle 4.1 -> 4.6
