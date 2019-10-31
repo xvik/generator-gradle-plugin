@@ -16,7 +16,7 @@
     "url": "https://github.com/xvik"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.5.0"
   },
   "scripts": {
     "test": "mocha"
