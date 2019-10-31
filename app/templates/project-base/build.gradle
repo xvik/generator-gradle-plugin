@@ -1,4 +1,5 @@
 plugins {
+    id 'com.gradle.build-scan' version '3.0'
     id 'groovy'
     id 'jacoco'
     id 'java-gradle-plugin'
@@ -107,3 +108,9 @@ test {
 dependencyUpdates.revision = 'release'
 jacocoTestReport.reports.xml.enabled = true
 generateJacocoTestKitProperties.destinationFile = file('build/jacoco/test.exec').absolutePath.replace("\\", '/')
+
+buildScan {
+    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+    termsOfServiceAgree = 'yes'
+    publishOnFailure()
+}
