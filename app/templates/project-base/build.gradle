@@ -22,7 +22,7 @@ wrapper {
 repositories { jcenter() }
 dependencies {
     testCompile('org.spockframework:spock-core:1.2-groovy-2.5') {
-        exclude module: 'groovy-all'
+        exclude group: 'org.codehaus.groovy'
     }
 }
 
