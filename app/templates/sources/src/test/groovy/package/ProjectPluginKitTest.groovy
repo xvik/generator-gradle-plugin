@@ -21,8 +21,10 @@ class <%= pluginClassPrefix %>PluginKitTest extends AbstractKitTest {
                 bar '2'
             }
 
-            task printFoo() << {
-                println "fooo: \$<%= pluginExtensionName %>.foo"
+            task printFoo() {
+                doLast {
+                    println "fooo: \$<%= pluginExtensionName %>.foo"
+                }
             }
 
         """
