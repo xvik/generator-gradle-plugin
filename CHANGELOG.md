@@ -1,5 +1,10 @@
 * Update gradle 4.8.1 -> 5.6.3
 * Enable gradle build scan for failed builds
+* Update plugin-publish plugin 0.9.10 -> 0.10.1
+* Update et.researchgate.release 2.7.0 -> 2.8.1
+* Update ru.vyarus.quality 3.1.1 -> 3.4.0
+* Update com.github.ben-manes.versions 0.20.0 -> 0.27.0
+* Update spock to 1.1 -> 1.2
 
 ### 1.7.0 (2018-07-22)
 * Update gradle 4.6 -> 4.8.1
@@ -8,6 +13,7 @@
 * Update com.github.ben-manes.versions 0.17.0 -> 0.20.0
 * Update ru.vyarus.java-lib 1.0.5 -> 1.1.2
 * Update ru.vyarus.quality 3.0.0 -> 3.1.1
+* Update pl.droidsonroids.jacoco.testkit 1.0.3 -> 1.0.5
 * Apply sleep fix for windows builds (test failures workaround)
 
 NOTE: gradle [STABLE_PUBLISHING](https://docs.gradle.org/4.8/userguide/publishing_maven.html#publishing_maven:deferred_configuration) option is enabled by default
