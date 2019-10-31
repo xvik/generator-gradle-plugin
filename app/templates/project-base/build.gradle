@@ -107,7 +107,6 @@ test {
 
 dependencyUpdates.revision = 'release'
 jacocoTestReport.reports.xml.enabled = true
-generateJacocoTestKitProperties.destinationFile = file('build/jacoco/test.exec').absolutePath.replace("\\", '/')
 
 buildScan {
     termsOfServiceUrl = 'https://gradle.com/terms-of-service'
