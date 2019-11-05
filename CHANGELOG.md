@@ -1,4 +1,4 @@
-* Update gradle 4.8.1 -> 5.6.3
+* Update gradle 4.8.1 -> 5.6.4
 * Enable gradle build scan for failed builds
 * Update plugin-publish plugin 0.9.10 -> 0.10.1
 * Update et.researchgate.release 2.7.0 -> 2.8.1
