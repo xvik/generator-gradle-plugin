@@ -1,6 +1,6 @@
 language: java
+dist: xenial
 jdk: <%= travisJdk %>
-sudo: false
 before_install: chmod +x gradlew
 
 install: ./gradlew assemble --no-daemon
