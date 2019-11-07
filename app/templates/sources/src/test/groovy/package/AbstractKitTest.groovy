@@ -15,6 +15,8 @@ import spock.lang.Specification
  */
 abstract class AbstractKitTest extends Specification {
 
+    boolean debug
+
     @Rule
     final TemporaryFolder testProjectDir = new TemporaryFolder()
     File buildFile
@@ -40,11 +42,11 @@ abstract class AbstractKitTest extends Specification {
     }
 
     /**
-     * Allow debug TestKit vm execution. After vm start it will wait for debug connection and continue processing after.
-     * (the same effect could be achieved with GradleRunner.withDebug(true) method)
+     * Enable it and run test with debugger (no manual attach required). Not always enabled to speed up tests during
+     * normal execution.
      */
     def debug() {
-        file('gradle.properties') << "\norg.gradle.jvmargs=-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"
+        debug = true
     }
 
     String projectName() {
@@ -56,6 +58,7 @@ abstract class AbstractKitTest extends Specification {
                 .withProjectDir(root)
                 .withArguments((commands + ['--stacktrace']) as String[])
                 .withPluginClasspath()
+                .withDebug(debug)
                 .forwardOutput()
     }
 

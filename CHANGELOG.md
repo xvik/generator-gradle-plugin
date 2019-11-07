@@ -6,6 +6,8 @@
 * Update com.github.ben-manes.versions 0.20.0 -> 0.27.0
 * Update spock to 1.1 -> 1.2
 * Add java11 travis and appveyor builds
+* Add support for multi-module model tests (`AbstractTest`)
+* Use GradleRunner's debug flag in TestKit tests to avoid manual debugger attachment (`AbstractKitTest`)
 
 ### 1.7.0 (2018-07-22)
 * Update gradle 4.6 -> 4.8.1
