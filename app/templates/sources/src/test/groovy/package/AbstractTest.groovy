@@ -93,10 +93,15 @@ abstract class AbstractTest extends Specification {
          */
         Project build() {
             if (root.subprojects) {
-                root.evaluationDependsOnChildren()
+                linkSubprojectsEvaluation(root)
             }
             root.evaluate()
             return root
+        }
+
+        private void linkSubprojectsEvaluation(Project project) {
+            project.evaluationDependsOnChildren()
+            project.subprojects.each {linkSubprojectsEvaluation(it)}
         }
     }
 }
