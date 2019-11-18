@@ -20,35 +20,32 @@ Features:
 
 ### Setup
 
-Releases are published to <% if (mirrorToJcenter) { %>[bintray jcenter](https://bintray.com/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>/), 
-[maven central](https://maven-badges.herokuapp.com/maven-central/<%= projectGroup %>/<%= projectName %>) and <% } %>
-[gradle plugins portal](https://plugins.gradle.org/plugin/<%= pluginFullName %>).
-
 <% if (mirrorToJcenter) { %>
-<!---
 [![JCenter](https://api.bintray.com/packages/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>/images/download.svg)](https://bintray.com/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>/_latestVersion)
 [![Maven Central](https://img.shields.io/maven-central/v/<%= projectGroup %>/<%= projectName %>.svg)](https://maven-badges.herokuapp.com/maven-central/<%= projectGroup %>/<%= projectName %>)
--->
-
-```groovy
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath '<%= projectGroup %>:<%= projectName %>:<%= projectVersion %>'
-    }
-}
-apply plugin: '<%= pluginFullName %>'
-```
-
-OR <% } %>
+<% } %>
+[![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/<%= projectGroup %>/<%= pluginName %>/<%= pluginFullName %>.gradle.plugin/maven-metadata.xml.svg?colorB=007ec6&label=plugins%20portal)](https://plugins.gradle.org/plugin/<%= pluginFullName %>)
 
 ```groovy
 plugins {
     id '<%= pluginFullName %>' version '<%= projectVersion %>'
 }
 ```
+
+OR
+
+```groovy
+buildscript {
+    repositories {
+        jcenter() 
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath '<%= projectGroup %>:<%= projectName %>:<%= projectVersion %>'
+    }
+}
+apply plugin: '<%= pluginFullName %>'
+``` 
 
 ### Usage
 
