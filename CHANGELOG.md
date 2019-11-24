@@ -2,7 +2,7 @@
 * Enable gradle build scan for failed builds
 * Update plugin-publish plugin 0.9.10 -> 0.10.1
 * Update et.researchgate.release 2.7.0 -> 2.8.1
-* Update ru.vyarus.quality 3.1.1 -> 3.4.0
+* Update ru.vyarus.quality 3.1.1 -> 4.0.0
 * Update com.github.ben-manes.versions 0.20.0 -> 0.27.0
 * Update spock to 1.1 -> 1.2
 * Add java11 travis and appveyor builds
