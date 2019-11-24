@@ -38,7 +38,7 @@ describe('check all options enabled', function () {
         this.timeout(10000);
         helpers.run(appPath)
             .inDir(targetPath)
-            .withOptions({offline: true, noglobal:true})
+            .withOptions({offline: true, noglobal: true})
             .withPrompts({
                 githubUser: 'johnd',
                 authorName: 'John Doe',
@@ -67,14 +67,14 @@ describe('check all options enabled', function () {
         assert.file(read(appPath + '/templates/sources').map(sources));
     });
 
-    it('creates valid plugin description', function () {
-        assert.fileContent('src/main/resources/META-INF/gradle-plugins/com.johnd.test.properties',
-            'implementation-class=com.johnd.testplugin.TestPlugin');
-    });
-
     it('creates valid project', function (done) {
         this.timeout(300000); //5 min should be enough to download everything
-        runGradle(targetPath + '/test-plugin', done);
+        runGradle(targetPath + '/test-plugin', function () {
+            assert.fileContent('build/resources/main/META-INF/gradle-plugins/com.johnd.test.properties',
+                'implementation-class=com.johnd.testplugin.TestPlugin');
+
+            done();
+        });
     });
 });
 
@@ -86,7 +86,7 @@ describe('check portal publishing only', function () {
     before(function (done) {
         helpers.run(appPath)
             .inDir(targetPath)
-            .withOptions({offline: true, noglobal:true})
+            .withOptions({offline: true, noglobal: true})
             .withPrompts({
                 githubUser: 'johnd',
                 authorName: 'John Doe',
@@ -111,14 +111,14 @@ describe('check portal publishing only', function () {
         assert.file(read(appPath + '/templates/sources').map(sources));
     });
 
-    it('creates valid plugin description', function () {
-        assert.fileContent('src/main/resources/META-INF/gradle-plugins/com.johnd.test.properties',
-            'implementation-class=com.johnd.testplugin.TestPlugin');
-    });
-
     it('creates valid project', function (done) {
         this.timeout(300000); //5 min should be enough to download everything
-        runGradle(targetPath + '/test-plugin', done);
+        runGradle(targetPath + '/test-plugin', function () {
+            assert.fileContent('build/resources/main/META-INF/gradle-plugins/com.johnd.test.properties',
+                'implementation-class=com.johnd.testplugin.TestPlugin');
+
+            done();
+        });
     });
 });
 
@@ -130,7 +130,7 @@ describe('check portal publishing with custom group', function () {
     before(function (done) {
         helpers.run(appPath)
             .inDir(targetPath)
-            .withOptions({offline: true, noglobal:true})
+            .withOptions({offline: true, noglobal: true})
             .withPrompts({
                 githubUser: 'johnd',
                 authorName: 'John Doe',
@@ -155,14 +155,14 @@ describe('check portal publishing with custom group', function () {
         assert.file(read(appPath + '/templates/sources').map(sources));
     });
 
-    it('creates valid plugin description', function () {
-        assert.fileContent('src/main/resources/META-INF/gradle-plugins/com.johnd.test.properties',
-            'implementation-class=com.johnd.testplugin.TestPlugin');
-    });
-
     it('creates valid project', function (done) {
         this.timeout(300000); //5 min should be enough to download everything
-        runGradle(targetPath + '/test-plugin', done);
+        runGradle(targetPath + '/test-plugin', function () {
+            assert.fileContent('build/resources/main/META-INF/gradle-plugins/com.johnd.test.properties',
+                'implementation-class=com.johnd.testplugin.TestPlugin');
+
+            done();
+        });
     });
 });
 
@@ -174,7 +174,7 @@ describe('check project name convention', function () {
     before(function (done) {
         helpers.run(appPath)
             .inDir(targetPath)
-            .withOptions({offline: true, noglobal:true})
+            .withOptions({offline: true, noglobal: true})
             .withPrompts({
                 githubUser: 'johnd',
                 authorName: 'John Doe',
@@ -203,14 +203,14 @@ describe('check project name convention', function () {
         assert.file(read(appPath + '/templates/sources').map(sources));
     });
 
-    it('creates valid plugin description', function () {
-        assert.fileContent('src/main/resources/META-INF/gradle-plugins/com.johnd.test.properties',
-            'implementation-class=com.johnd.testplugin.TestPlugin');
-    });
-
     it('creates valid project', function (done) {
         this.timeout(300000); //5 min should be enough to download everything
-        runGradle(targetPath + '/gradle-test-plugin', done);
+        runGradle(targetPath + '/gradle-test-plugin', function () {
+            assert.fileContent('build/resources/main/META-INF/gradle-plugins/com.johnd.test.properties',
+                'implementation-class=com.johnd.testplugin.TestPlugin');
+
+            done();
+        });
     });
 });
 
@@ -223,7 +223,7 @@ describe('check complex project name convention', function () {
     before(function (done) {
         helpers.run(appPath)
             .inDir(targetPath)
-            .withOptions({offline: true, noglobal:true})
+            .withOptions({offline: true, noglobal: true})
             .withPrompts({
                 githubUser: 'johnd',
                 authorName: 'John Doe',
@@ -259,13 +259,13 @@ describe('check complex project name convention', function () {
         assert.file(read(appPath + '/templates/sources').map(sources));
     });
 
-    it('creates valid plugin description', function () {
-        assert.fileContent('src/main/resources/META-INF/gradle-plugins/com.johnd.test-subject.properties',
-            'implementation-class=com.johnd.testplugin.TestSubjectPlugin');
-    });
-
     it('creates valid project', function (done) {
         this.timeout(300000); //5 min should be enough to download everything
-        runGradle(targetPath + '/gradle-test-subject-plugin', done);
+        runGradle(targetPath + '/gradle-test-subject-plugin', function () {
+            assert.fileContent('build/resources/main/META-INF/gradle-plugins/com.johnd.test-subject.properties',
+                'implementation-class=com.johnd.testplugin.TestSubjectPlugin');
+
+            done();
+        });
     });
 });

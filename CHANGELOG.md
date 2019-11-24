@@ -9,6 +9,10 @@
 * Add support for multi-module model tests (`AbstractTest`)
 * Use GradleRunner's debug flag in TestKit tests to avoid manual debugger attachment (`AbstractKitTest`)
 * Add plugin portal version badge
+* Correct plugin declaration:
+    - java-gradle-plugin applied before other plugins
+    - Use gradlePlugin section to declare plugin (separate from pluginBundle)
+    - Don't generate META-INF/gradle-plugins/gradle.properties file because it will be auto-generated
 
 ### 1.7.0 (2018-07-22)
 * Update gradle 4.6 -> 4.8.1
