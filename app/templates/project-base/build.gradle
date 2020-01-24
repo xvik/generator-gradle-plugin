@@ -72,7 +72,7 @@ bintray {
 
 gradlePlugin {
     plugins {
-        javaLibPlugin {
+        <%= pluginExtensionName %>Plugin {
             id = '<%= pluginFullName %>'
             displayName = project.description
             implementationClass = '<%= projectPackage %>.<%= pluginClassPrefix %>Plugin'
