@@ -1,3 +1,4 @@
+### 1.9.0 (2020-01-26)
 * Update ru.vyarus.java-lib 1.1.2 -> 2.1.0
 * Update gradle-github-info-plugin 1.1.0 -> 1.2.0
 * Update spock to 1.3
