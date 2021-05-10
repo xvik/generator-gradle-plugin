@@ -20,8 +20,7 @@ Features:
 
 ### Setup
 
-<% if (mirrorToJcenter) { %>
-[![JCenter](https://api.bintray.com/packages/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>/images/download.svg)](https://bintray.com/<%= bintrayUser %>/<%= bintrayRepo %>/<%= projectName %>/_latestVersion)
+<% if (centralPublish) { %>
 [![Maven Central](https://img.shields.io/maven-central/v/<%= projectGroup %>/<%= projectName %>.svg)](https://maven-badges.herokuapp.com/maven-central/<%= projectGroup %>/<%= projectName %>)
 <% } %>
 [![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/<%= projectGroup %>/<%= pluginName %>/<%= pluginFullName %>.gradle.plugin/maven-metadata.xml.svg?colorB=007ec6&label=plugins%20portal)](https://plugins.gradle.org/plugin/<%= pluginFullName %>)
@@ -37,7 +36,6 @@ OR
 ```groovy
 buildscript {
     repositories {
-        jcenter() 
         gradlePluginPortal()
     }
     dependencies {

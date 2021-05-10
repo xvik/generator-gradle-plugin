@@ -16,15 +16,9 @@ const questions = [
     'projectVersion',              // plugin version
     'projectDesc',                  // short description
     'pluginPortalDesc',            // full description for plugin portal
-    'targetJava',                   // target java version (lowest supported), it's not the jdk we build with
     'pluginPortalTags',            // tags for plugin portal
-    'mirrorToJcenter',             // publish to bintray (and optionally maven central)
-    'pluginPortalUseCustomGroup', // if true custom group used (requires approve on portal), true when jcenter mirror active
-    'bintrayUser',                  // bintray user name
-    'bintrayRepo',                  // target bintray maven repository name
-    'bintrayTags',                  // tags for bintray package (array)
-    'bintraySignFiles',            // true if files signing enabled
-    'mavenCentralSync'             // true to sync with maven central (must be false on first release)
+    'centralPublish',             // publish to maven central
+    'pluginPortalUseCustomGroup', // if true custom group used (requires approve on portal), true when central publish active
 ];
 
 /* extra variables:
@@ -49,10 +43,8 @@ const globals = [
     'authorName',
     'authorEmail',
     'projectGroup',
-    'mirrorToJcenter',
-    'pluginPortalUseCustomGroup',
-    'bintrayUser',
-    'bintrayRepo'
+    'centralPublish',
+    'pluginPortalUseCustomGroup'
 ];
 
 
@@ -205,64 +197,17 @@ module.exports = class extends JavaGenerator {
                     when: disableOnUpdate
                 },
                 {
-                    type: 'list',
-                    name: 'targetJava',
-                    message: 'Target java version (the lowest version you want to be compatible with)',
-                    default: this.targetJava || '1.7',
-                    choices: [
-                        {value: '1.7', name: 'Java 7'},
-                        {value: '1.8', name: 'Java 8'}
-                    ]
-                },
-                {
                     type: 'confirm',
-                    name: 'mirrorToJcenter',
-                    message: 'Should plugin aslo be published on bintray?',
-                    default: this.mirrorToJcenter || true
+                    name: 'centralPublish',
+                    message: 'Should plugin also be published on maven central?',
+                    default: this.centralPublish || true
                 },
                 {
                     type: 'confirm',
                     name: 'pluginPortalUseCustomGroup',
                     message: 'Should plugin use custom group?',
                     default: this.pluginPortalUseCustomGroup || true,
-                    when: props => !props.mirrorToJcenter
-                },
-                {
-                    type: 'input',
-                    name: 'bintrayUser',
-                    message: 'Bintray user name (used for badge generation only)',
-                    default: this.$defaultValue('bintrayUser'),
-                    validate: input => !input ? 'Bintray user name required' : true,
-                    when: props => props.mirrorToJcenter
-                },
-                {
-                    type: 'input',
-                    name: 'bintrayRepo',
-                    message: 'Bintray maven repository name',
-                    default: this.$defaultValue('bintrayRepo'),
-                    validate: input => !input ? 'Bintray repository name required' : true,
-                    when: props => props.mirrorToJcenter
-                },
-                {
-                    type: 'input',
-                    name: 'bintrayTags',
-                    message: 'Tags for bintray package (comma separated list)',
-                    default: this.bintrayTags,
-                    when: props => props.mirrorToJcenter
-                },
-                {
-                    type: 'confirm',
-                    name: 'bintraySignFiles',
-                    message: 'Should bintray sign files on release (bintray must be configured accordingly)?',
-                    default: this.bintraySignFiles || true,
-                    when: props => props.mirrorToJcenter
-                },
-                {
-                    type: 'confirm',
-                    name: 'mavenCentralSync',
-                    message: 'Should bintray publish to maven central on release?',
-                    default: this.mavenCentralSync || true,
-                    when: props => props.mirrorToJcenter
+                    when: props => !props.centralPublish
                 }
             ];
 
@@ -296,41 +241,18 @@ module.exports = class extends JavaGenerator {
     configuring() {
 
         // configure
-        if (!this.mirrorToJcenter) {
-            this.bintraySignFiles = false;
-            this.mavenCentralSync = false;
-            this.bintrayUser = '';
-            this.bintrayRepo = '';
-            this.bintrayTags = '';
-            this.bintraySignFiles = false;
-            this.mavenCentralSync = false;
-        } else {
+        if (this.centralPublish) {
             this.pluginPortalUseCustomGroup = true;
         }
 
         this.$selectTargetFolder();
         this.$saveConfiguration(questions, this.options.noglobal ? [] : globals);
 
-        if (!this.context.updateMode) {
-            // synchronization with maven central is impossible on first release, but later
-            // it must be set to true (if required)
-            // so always set it as false on initial generation
-            this.mavenCentralSync = false;
-        }
-
-        this.bintrayTags = this.$quoteTagsList(this.bintrayTags);
         this.pluginPortalTags = this.$quoteTagsList(this.pluginPortalTags);
         this.pluginName = this.projectName.replace(/gradle-|-plugin/g, '');
         this.pluginClassPrefix = this.$generateProjectClassPrefix(this.pluginName);
         this.pluginFullName = `${this.projectGroup}.${this.pluginName}`;
         this.pluginExtensionName = this.pluginClassPrefix.substring(0, 1).toLowerCase() + this.pluginClassPrefix.substring(1);
-
-        // select java version
-        const travis = {
-            '1.7': 'openjdk8',
-            '1.8': 'openjdk8'
-        };
-        this.travisJdk = travis[this.targetJava];
     }
 
     writing() {
@@ -367,12 +289,12 @@ module.exports = class extends JavaGenerator {
 
         // check gradle config
         let conf = this.context.gradleConf || {},
-            warnBintray = this.mirrorToJcenter && (!conf.bintrayUser || !conf.bintrayKey),
-            warnSign = this.bintraySignFiles && !conf.gpgPassphrase,
-            warnCentral = this.config.get('mavenCentralSync') && (!conf.sonatypeUser || !conf.sonatypePassword),
-            warnPortal = !conf['gradle.publish.key'] || !conf['gradle.publish.secret'];
+            warnPortal = !conf['gradle.publish.key'] || !conf['gradle.publish.secret'],
+            warnSign = this.config.get('centralPublish') &&
+                (!conf['signing.keyId'] || !conf['signing.password'] || !conf['signing.secretKeyRingFile']),
+            warnCentral = this.config.get('centralPublish') && (!conf.sonatypeUser || !conf.sonatypePassword);
 
-        if (!warnBintray && !warnSign && !warnCentral && !warnPortal) {
+        if (!warnSign && !warnCentral && !warnPortal) {
             return;
         }
 
@@ -384,29 +306,18 @@ module.exports = class extends JavaGenerator {
             this.log(chalk.yellow('gradle.publish.key') + '=<plugins portal key>');
             this.log(chalk.yellow('gradle.publish.secret') + '=<plugins portal secret>');
         }
-        if (warnBintray) {
-            this.log();
-            this.log(chalk.yellow('bintrayUser') + '=' + this.bintrayUser);
-            this.log(chalk.yellow('bintrayKey') + '=<api key (go to bintray profile page, hit edit and access "api keys" section>');
-        }
         if (warnSign) {
             this.log();
-            this.log('If your gpg certificate requires passphrase you need to configure it (for automatic signing):');
-            this.log(chalk.yellow('gpgPassphrase') + '=<gpgPassphrase>');
+            this.log('For release artifacts signing:');
+            this.log(chalk.yellow('signing.keyId') + '=<certificate id>');
+            this.log(chalk.yellow('signing.password') + '=<password (empty if not set)>');
+            this.log(chalk.yellow('signing.secretKeyRingFile') + '=<path to cetrificate file>');
         }
         if (warnCentral) {
             this.log();
-            this.log('If you going to automatically sync with maven central, you need to configure sonatype user:');
+            this.log('For maven central publication:');
             this.log(chalk.yellow('sonatypeUser') + '=<sonatype user>');
             this.log(chalk.yellow('sonatypePassword') + '=<sonatype password>');
-        }
-
-
-        // maven central notice
-        if (this.config.get('mavenCentralSync') && !this.context.updateMode) {
-            this.log();
-            this.log(chalk.red('IMPORTANT') + ' Maven central sync is impossible on first release, so ' +
-                'it was set to false in build.gradle (read doc for more details).');
         }
     }
 };

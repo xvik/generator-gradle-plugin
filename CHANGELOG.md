@@ -4,12 +4,13 @@
 * Update ru.vyarus.quality 4.0.0 -> 4.6.0
 * Update com.github.ben-manes.versions 0.27.0 -> 0.38.0
 * Update pl.droidsonroids.jacoco.testkit 1.0.5 -> 1.0.8
-* (breaking) Removed jcenter publishing, instead publish to maven central directly  
+* (breaking) Removed jcenter publishing, instead publish to maven central directly (option)  
     - Remove com.jfrog.bintray plugin
     - Add io.github.gradle-nexus.publish-plugin (1.1.0)
     - Add signing plugin (signing now manual; certificate configuration required)
 * Remove jcenter badge and repo usages
 * Disable gradle metadata publishing
+* Remove java version selection: java8 used by default for compilation
 
 ### 1.9.0 (2020-01-26)
 * Update ru.vyarus.java-lib 1.1.2 -> 2.1.0

@@ -2,10 +2,10 @@ plugins {
     id 'com.gradle.plugin-publish' version '0.14.0'
     id 'java-gradle-plugin'
     id 'groovy'
-    id 'jacoco'
-    id 'signing'
+    id 'jacoco'<% if (centralPublish) { %>
+    id 'signing'<% } %>
     id 'net.researchgate.release' version '2.8.1'
-    id 'ru.vyarus.quality' version '4.6.0'<% if (mirrorToJcenter) { %>
+    id 'ru.vyarus.quality' version '4.6.0'<% if (centralPublish) { %>
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
     id 'ru.vyarus.java-lib' version '2.1.0'<% } %>
     id 'ru.vyarus.github-info' version '1.2.0'
@@ -13,7 +13,7 @@ plugins {
     id "pl.droidsonroids.jacoco.testkit" version "1.0.8"
 }
 
-sourceCompatibility = <%= targetJava %>
+sourceCompatibility = 1.8
 
 wrapper {
     gradleVersion = '6.9'
@@ -34,7 +34,7 @@ github {
     license 'MIT'
 }
 
-<% if (mirrorToJcenter) { %>pom {
+<% if (centralPublish) { %>pom {
     developers {
         developer {
             id '<%= githubUser %>'
@@ -87,7 +87,7 @@ tasks.withType(GenerateModuleMetadata).configureEach {
 }
 
 afterReleaseBuild {
-    dependsOn = [<% if (mirrorToJcenter) { %>
+    dependsOn = [<% if (centralPublish) { %>
             'publishMavenPublicationToSonatypeRepository',
             'closeAndReleaseSonatypeStagingRepository',
             <% } %>publishPlugins]

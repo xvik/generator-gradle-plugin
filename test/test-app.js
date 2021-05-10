@@ -51,14 +51,8 @@ describe('check all options enabled', () => {
                 projectVersion: '0.1.0',
                 projectDesc: 'Test plugin',
                 pluginPortalDesc: 'Test plugin for ...',
-                targetJava: '1.7',
                 pluginPortalTags: 'java, sample,  plugin',
-                mirrorToJcenter: true,
-                bintrayUser: 'john',
-                bintrayRepo: 'mvn',
-                bintrayTags: 'java, sample,  lib',
-                bintraySignFiles: true,
-                mavenCentralSync: true
+                centralPublish: true
             });
     });
 
@@ -97,9 +91,8 @@ describe('check portal publishing only', () => {
                 projectVersion: '0.1.0',
                 projectDesc: 'Test plugin',
                 pluginPortalDesc: 'Test plugin for ...',
-                targetJava: '1.7',
                 pluginPortalTags: 'java, sample,  plugin',
-                mirrorToJcenter: false,
+                centralPublish: false,
                 pluginPortalUseCustomGroup: false
             });
     });
@@ -139,9 +132,8 @@ describe('check portal publishing with custom group', () => {
                 projectVersion: '0.1.0',
                 projectDesc: 'Test plugin',
                 pluginPortalDesc: 'Test plugin for ...',
-                targetJava: '1.7',
                 pluginPortalTags: 'java, sample,  plugin',
-                mirrorToJcenter: false,
+                centralPublish: false,
                 pluginPortalUseCustomGroup: true
             });
     });
@@ -181,14 +173,8 @@ describe('check project name convention', () => {
                 projectVersion: '0.1.0',
                 projectDesc: 'Test plugin',
                 pluginPortalDesc: 'Test plugin for ...',
-                targetJava: '1.7',
                 pluginPortalTags: 'java, sample,  plugin',
-                mirrorToJcenter: true,
-                bintrayUser: 'john',
-                bintrayRepo: 'mvn',
-                bintrayTags: 'java, sample,  lib',
-                bintraySignFiles: true,
-                mavenCentralSync: true
+                centralPublish: true
             });
     });
 
@@ -228,14 +214,8 @@ describe('check complex project name convention', () => {
                 projectVersion: '0.1.0',
                 projectDesc: 'Test plugin',
                 pluginPortalDesc: 'Test plugin for ...',
-                targetJava: '1.7',
                 pluginPortalTags: 'java, sample,  plugin',
-                mirrorToJcenter: true,
-                bintrayUser: 'john',
-                bintrayRepo: 'mvn',
-                bintrayTags: 'java, sample,  lib',
-                bintraySignFiles: true,
-                mavenCentralSync: true
+                centralPublish: true
             });
     });
 
