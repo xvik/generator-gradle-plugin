@@ -1,5 +1,6 @@
 package <%= projectPackage %>
 
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Rule
@@ -13,6 +14,8 @@ import spock.lang.Specification
  * @since <%= date %>
  */
 abstract class AbstractTest extends Specification {
+
+    boolean isWin = Os.isFamily(Os.FAMILY_WINDOWS)
 
     @Rule
     final TemporaryFolder testProjectDir = new TemporaryFolder()

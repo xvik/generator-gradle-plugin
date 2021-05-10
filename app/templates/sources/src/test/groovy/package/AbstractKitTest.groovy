@@ -1,5 +1,6 @@
 package <%= projectPackage %>
 
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
@@ -16,6 +17,7 @@ import spock.lang.Specification
 abstract class AbstractKitTest extends Specification {
 
     boolean debug
+    boolean isWin = Os.isFamily(Os.FAMILY_WINDOWS)
 
     @Rule
     final TemporaryFolder testProjectDir = new TemporaryFolder()
@@ -75,10 +77,18 @@ abstract class AbstractKitTest extends Specification {
     }
 
     BuildResult runVer(String gradleVersion, String... commands) {
+        println 'Running with GRADLE ' + gradleVersion
         return gradle(commands).withGradleVersion(gradleVersion).build()
     }
 
     BuildResult runFailedVer(String gradleVersion, String... commands) {
+        println 'Running with GRADLE ' + gradleVersion
         return gradle(commands).withGradleVersion(gradleVersion).buildAndFail()
+    }
+
+    protected String unifyString(String input) {
+        return input
+                // cleanup win line break for simpler comparisons
+                .replaceAll("\r", '')
     }
 }
