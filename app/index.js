@@ -1,6 +1,7 @@
 'use strict';
 
 const chalk = require('chalk'),
+    _ = require('lodash'),
     JavaGenerator = require('yo-java-helper');
 
 /**
@@ -99,6 +100,22 @@ module.exports = class extends JavaGenerator {
                     'If you need to re-run questions use --ask generator option.');
             }
             this.log();
+
+            // MIGRATION from 1.9.0 or before
+
+            // new property could be recovered from legacy bintray config
+            if (_.isUndefined(this.config.get('centralPublish'))) {
+                this.centralPublish = this.config.get('mavenCentralSync');
+            }
+
+            // clear removed properties
+            ['targetJava',
+            'mirrorToJcenter',
+            'bintrayUser',
+            'bintrayRepo',
+            'bintrayTags',
+            'bintraySignFiles',
+            'mavenCentralSync'].forEach(value => this.config.delete(value))
         }
 
         // ask for github
@@ -291,7 +308,7 @@ module.exports = class extends JavaGenerator {
         let conf = this.context.gradleConf || {},
             warnPortal = !conf['gradle.publish.key'] || !conf['gradle.publish.secret'],
             warnSign = this.config.get('centralPublish') &&
-                (!conf['signing.keyId'] || !conf['signing.password'] || !conf['signing.secretKeyRingFile']),
+                (!conf['signing.keyId'] || !conf['signing.secretKeyRingFile']),
             warnCentral = this.config.get('centralPublish') && (!conf.sonatypeUser || !conf.sonatypePassword);
 
         if (!warnSign && !warnCentral && !warnPortal) {
