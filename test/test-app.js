@@ -1,7 +1,6 @@
 'use strict';
 
 let path = require('path'),
-    assert = require('yeoman-assert'),
     helpers = require('yeoman-test'),
     read = require('fs-readdir-recursive'),
     util = require('util'),
