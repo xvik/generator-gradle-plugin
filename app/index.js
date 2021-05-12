@@ -115,7 +115,7 @@ module.exports = class extends JavaGenerator {
             'bintrayRepo',
             'bintrayTags',
             'bintraySignFiles',
-            'mavenCentralSync'].forEach(value => this.config.delete(value))
+            'mavenCentralSync'].forEach(value => this.config.delete(value));
         }
 
         // ask for github
