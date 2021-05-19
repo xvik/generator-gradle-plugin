@@ -11,6 +11,7 @@
 * Remove jcenter badge and repo usages
 * Disable gradle metadata publishing
 * Remove java version selection: java8 used by default for compilation
+* Enable mavenLocal as plugin repository by default (in settings.gradle)
 
 ### 1.9.0 (2020-01-26)
 * Update ru.vyarus.java-lib 1.1.2 -> 2.1.0
