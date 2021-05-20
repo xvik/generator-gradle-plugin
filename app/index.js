@@ -278,8 +278,7 @@ module.exports = class extends JavaGenerator {
             'CHANGELOG.md',
             'README.md',
             'gradle.properties',
-            'LICENSE',
-            'settings.gradle'
+            'LICENSE'
         ];
         this.gradlewExists = this.$exists('gradlew');
         this.$copy('gradle-base', {writeOnceFiles: writeOnceFiles});
