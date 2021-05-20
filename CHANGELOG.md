@@ -13,6 +13,7 @@
 * Remove java version selection: java8 used by default for compilation
 * Enable mavenLocal as plugin repository by default (in settings.gradle)
 * settings.gradle is modified now on project update
+* Use spock 2.0 (groovy 2.5)
 
 ### 1.9.0 (2020-01-26)
 * Update ru.vyarus.java-lib 1.1.2 -> 2.1.0
