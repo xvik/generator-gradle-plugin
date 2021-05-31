@@ -2,7 +2,7 @@
 * Update to gradle 6.9
 * Update plugin-publish plugin 0.10.1 -> 0.14.0
 * Update ru.vyarus.quality 4.0.0 -> 4.6.0
-* Update com.github.ben-manes.versions 0.27.0 -> 0.38.0
+* Update com.github.ben-manes.versions 0.27.0 -> 0.39.0
 * Update pl.droidsonroids.jacoco.testkit 1.0.5 -> 1.0.8
 * (breaking) Removed jcenter publishing, instead publish to maven central directly (option)  
     - Remove com.jfrog.bintray plugin
