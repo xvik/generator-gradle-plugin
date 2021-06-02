@@ -19,7 +19,7 @@ wrapper {
     gradleVersion = '6.9'
 }
 
-repositories { mavenCentral(); gradlePluginPortal() }
+repositories { mavenLocal(); mavenCentral(); gradlePluginPortal() }
 dependencies {
     testImplementation('org.spockframework:spock-core:2.0-groovy-2.5') {
         exclude group: 'org.codehaus.groovy'
