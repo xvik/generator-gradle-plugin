@@ -53,12 +53,12 @@ nexusPublishing {
     }
 }
 
+// Required signing properties for release: signing.keyId, signing.password and signing.secretKeyRingFile
+// (https://docs.gradle.org/current/userguide/signing_plugin.html#sec:signatory_credentials)
+
 javaLib {
     // don't publish gradle metadata artifact
     disableGradleMetadata()
-    // artifacts signed only on release
-    // https://docs.gradle.org/current/userguide/signing_plugin.html#sec:signatory_credentials
-    // enableSnapshotsSigning()
 }
 <% } %>
 
