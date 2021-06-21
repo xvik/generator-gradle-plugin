@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://www.opensource.org/licenses/MIT)
 [![NPM version](https://img.shields.io/npm/v/generator-gradle-plugin.svg)](http://badge.fury.io/js/generator-gradle-plugin)
-[![Build Status](https://secure.travis-ci.org/xvik/generator-gradle-plugin.png)](https://travis-ci.org/xvik/generator-gradle-plugin)
+[![Build Status](https://travis-ci.com/xvik/generator-gradle-plugin.svg?branch=master)](https://travis-ci.com/xvik/generator-gradle-plugin)
 
 ### About
 
