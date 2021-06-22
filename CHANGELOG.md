@@ -1,4 +1,4 @@
-* Minimal required node 12.10.0
+* Minimal required node 12.12.0
 * Update to gradle 6.9
 * Update plugin-publish plugin 0.10.1 -> 0.14.0
 * Update ru.vyarus.quality 4.0.0 -> 4.6.0
