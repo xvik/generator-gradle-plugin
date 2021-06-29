@@ -1,3 +1,4 @@
+### 2.0.0 (2021-06-30)
 * Minimal required node 12.12.0
 * Update to gradle 6.9
 * Update plugin-publish plugin 0.10.1 -> 0.15.0
@@ -15,7 +16,7 @@
 * Remove java version selection: java8 used by default for compilation
 * Enable mavenLocal as plugin repository by default (in settings.gradle)
 * settings.gradle is modified now on project update
-* Use spock 2.0 (groovy 2.5)
+* Use spock 2.0 (groovy 2.5 because gradle 6.9 is not on groovy 3.0 yet)
 
 ### 1.9.0 (2020-01-26)
 * Update ru.vyarus.java-lib 1.1.2 -> 2.1.0
