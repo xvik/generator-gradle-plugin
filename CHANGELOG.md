@@ -1,3 +1,5 @@
+* Update ru.vyarus.java-lib 2.2.0 -> 2.2.1
+
 ### 2.0.0 (2021-06-30)
 * Minimal required node 12.12.0
 * Update to gradle 6.9
