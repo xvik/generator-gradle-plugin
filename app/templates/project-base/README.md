@@ -1,6 +1,6 @@
 # <%= projectName %>
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://www.opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.com/<%= githubUser %>/<%= projectName %>.svg?branch=master)](https://travis-ci.com/<%= githubUser %>/<%= projectName %>)
+[![CI](https://github.com/<%= githubUser %>/<%= projectName %>/actions/workflows/CI.yml/badge.svg)](https://github.com/<%= githubUser %>/<%= projectName %>/actions/workflows/CI.yml)
 [![Appveyor build status](https://ci.appveyor.com/api/projects/status/github/<%= githubUser %>/<%= projectName %>?svg=true)](https://ci.appveyor.com/project/<%= githubUser %>/<%= projectName %>)
 [![codecov](https://codecov.io/gh/<%= githubUser %>/<%= projectName %>/branch/master/graph/badge.svg)](https://codecov.io/gh/<%= githubUser %>/<%= projectName %>)
 
