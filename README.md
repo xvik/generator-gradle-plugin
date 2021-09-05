@@ -14,7 +14,7 @@ Features:
 * Plugin sample
 * Tests samples with ProjectBuilder and TestKit
 * Configured for publishing to plugins portal and maven central
-* CI: [travis](https://travis-ci.com/) (linux), [appveyor](https://www.appveyor.com/) (windows)
+* CI: github actions (linux), [appveyor](https://www.appveyor.com/) (windows)
 * Coverage with jacoco, merged from both win and linux builds in [codecov.io](https://codecov.io/)
 * Code quality checks with CodeNarc
 * [Release process](https://github.com/researchgate/gradle-release#introduction) (like maven release)
@@ -221,7 +221,6 @@ It will not generate sample sources again and also will not touch: CHANGELOG.md,
 It updates:
 * Project gradle (wrapper files, scripts and version in build.gradle)
 * Gradle configs: build.gradle, settings.gradle
-* Travis config
 * gitignore
 
 This mode is useful when project isn't changed much after generation. In case when you have multiple projects 
@@ -244,9 +243,7 @@ Create [github](https://github.com) repo matching your plugin name and push proj
 
 In github project settings go to `Webhooks & services` and add `travis-ci` service.
 
-Enable repository on services:
-* [travis](https://travis-ci.com/)
-* [appveyor](https://www.appveyor.com/) 
+Enable repository on [appveyor](https://www.appveyor.com/) 
 
 And after next commit windows and linux builds will be performed automatically and combined coverage report
 will be available on [codecov](https://codecov.io/) (badges for all services are already generated in readme). 
