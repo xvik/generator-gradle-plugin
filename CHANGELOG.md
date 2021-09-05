@@ -1,3 +1,4 @@
+### 2.0.1 (2021-09-06)
 * Update ru.vyarus.java-lib 2.2.0 -> 2.2.1
 * Replace travis with github actions
 * Add dependabot config
