@@ -19,6 +19,9 @@ Features:
 * Code quality checks with CodeNarc
 * [Release process](https://github.com/researchgate/gradle-release#introduction) (like maven release)
 
+Note: gradle 6.9 used instead of 7.x because groovy plugin compiled under 7.x would not be compatible
+with the previous gradle versions (plugin would be usable only with gradle 7.x, which is not desired)
+
 ### Known issue
 
 Gradle 2.13+ has a [bug with console input](https://issues.gradle.org/browse/GRADLE-3446). As a result, 
