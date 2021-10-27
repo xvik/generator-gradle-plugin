@@ -1,3 +1,7 @@
+* Update plugin-publish plugin 0.15 -> 0.16
+* Update pl.droidsonroids.jacoco.testkit 1.0.8 -> 1.0.9
+* Update ru.vyarus.java-lib 2.2.1 -> 2.2.2
+
 ### 2.0.1 (2021-09-06)
 * Update ru.vyarus.java-lib 2.2.0 -> 2.2.1
 * Replace travis with github actions
