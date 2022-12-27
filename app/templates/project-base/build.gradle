@@ -1,15 +1,15 @@
 plugins {
-    id 'com.gradle.plugin-publish' version '0.16.0'
+    id 'com.gradle.plugin-publish' version '0.21.0'
     id 'java-gradle-plugin'
     id 'groovy'
     id 'jacoco'<% if (centralPublish) { %>
     id 'signing'<% } %>
-    id 'net.researchgate.release' version '2.8.1'
-    id 'ru.vyarus.quality' version '4.6.0'<% if (centralPublish) { %>
+    id 'net.researchgate.release' version '3.0.2'
+    id 'ru.vyarus.quality' version '4.8.0'<% if (centralPublish) { %>
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
-    id 'ru.vyarus.java-lib' version '2.2.2'<% } %>
-    id 'ru.vyarus.github-info' version '1.3.0'
-    id 'com.github.ben-manes.versions' version '0.39.0'
+    id 'ru.vyarus.java-lib' version '2.3.1'<% } %>
+    id 'ru.vyarus.github-info' version '1.4.0'
+    id 'com.github.ben-manes.versions' version '0.44.0'
     id "pl.droidsonroids.jacoco.testkit" version "1.0.9"
 }
 
@@ -53,6 +53,9 @@ nexusPublishing {
     }
 }
 
+// skip signing for jitpack (snapshots)
+tasks.withType(Sign) {onlyIf { !System.getenv('JITPACK') }}
+
 // Required signing properties for release: signing.keyId, signing.password and signing.secretKeyRingFile
 // (https://docs.gradle.org/current/userguide/signing_plugin.html#sec:signatory_credentials)
 
@@ -80,6 +83,8 @@ pluginBundle {
         artifactId = project.name
     }<% } %>
 }
+
+// release.git.requireBranch.set('master')  // default is main
 
 afterReleaseBuild {
     dependsOn = [<% if (centralPublish) { %>
