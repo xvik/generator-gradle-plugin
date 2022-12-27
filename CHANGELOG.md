@@ -1,3 +1,4 @@
+### 2.1.0 (2022-12-27)
 * Update plugin-publish plugin 0.15 -> 0.21
 * Update pl.droidsonroids.jacoco.testkit 1.0.8 -> 1.0.9
 * Update ru.vyarus.java-lib 2.2.1 -> 2.3.1
@@ -5,6 +6,9 @@
 * Update ru.vyarus.quality 4.6.0 -> 4.8.0
 * Update com.github.ben-manes.versions 0.39.0 -> 0.44.0
 * Update et.researchgate.release 2.8.1 -> 3.0.2
+* Fix jitpack support
+* By default, release plugin assume main branch (setting for master commented)
+* Release process no longer perform full build (https://github.com/researchgate/gradle-release/issues/374)
 
 ### 2.0.1 (2021-09-06)
 * Update ru.vyarus.java-lib 2.2.0 -> 2.2.1
